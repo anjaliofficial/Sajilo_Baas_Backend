@@ -9,10 +9,9 @@ const userController = new UserController();
 router.post("/register", userController.register.bind(userController));
 router.post("/login", userController.login.bind(userController));
 
-// Protected route: any logged-in user
-router.get("/profile", authorizedMiddleware, (req, res) => {
-  res.json({ message: "User profile info", user: req.user });
-});
+// router.get("/profile", authorizedMiddleware, (req, res) => {
+//   res.json({ message: "User profile info", user: req.user });
+// });
 
 // Admin-only route
 router.get("/admin", authorizedMiddleware, roleMiddleware(["admin"]), (req, res) => {
