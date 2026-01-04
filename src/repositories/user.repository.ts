@@ -1,17 +1,21 @@
 import { UserModel, IUser } from "../models/user.model";
 import bcrypt from "bcrypt";
 
-export interface IUserRepository {
-  createUser(userData: Partial<IUser>): Promise<IUser>;
-  getUserByEmail(email: string): Promise<IUser | null>;
-  getUserByUsername(username: string): Promise<IUser | null>;
-  getUserById(id: string): Promise<IUser | null>;
-  getAllUsers(): Promise<IUser[]>; // fixed name
-  updateUser(id: string, updateData: Partial<IUser>): Promise<IUser | null>;
-  deleteUser(id: string): Promise<boolean>;
-}
+export interface IUserRepository{
+    createUser(userData: Partial<IUser>): Promise<IUser >;
+    getUserByEmail(email: string): Promise<IUser | null>;
+    getUserByUsername(username: string): Promise<IUser | null>;
+    getUserById(id: string): Promise<IUser | null>;
+    getAllUser(): Promise<IUser[]>;
+    updateUser(id: string, updateData: Partial<IUser>): Promise<IUser | null>;
+    deleteUser(id: string): Promise<boolean>;
+
+};
 
 export class UserRepository implements IUserRepository {
+  getAllUser(): Promise<IUser[]> {
+      throw new Error("Method not implemented.");
+  }
   // Create user (hash password before saving)
   async createUser(userData: Partial<IUser>): Promise<IUser> {
     if (userData.password) {
