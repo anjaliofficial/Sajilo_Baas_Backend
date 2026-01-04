@@ -1,6 +1,15 @@
 import { UserModel, IUser } from "../models/user.model";
-import { IUserRepository } from "./user.repository.interface";
 import bcrypt from "bcrypt";
+
+export interface IUserRepository {
+  createUser(userData: Partial<IUser>): Promise<IUser>;
+  getUserByEmail(email: string): Promise<IUser | null>;
+  getUserByUsername(username: string): Promise<IUser | null>;
+  getUserById(id: string): Promise<IUser | null>;
+  getAllUsers(): Promise<IUser[]>; // fixed name
+  updateUser(id: string, updateData: Partial<IUser>): Promise<IUser | null>;
+  deleteUser(id: string): Promise<boolean>;
+}
 
 export class UserRepository implements IUserRepository {
   // Create user (hash password before saving)
