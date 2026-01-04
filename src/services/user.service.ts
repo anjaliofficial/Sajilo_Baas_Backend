@@ -1,14 +1,14 @@
-import { UserRepository } from "../repositories/user.repository"; 
+import { UserRepository } from "../repositories/user.repository";
 import { HttpError } from "../error/http-error";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config";
 import { CreateUserDTOType } from "../dtos/auth/register.dto";
 import { loginUserDTO } from "../dtos/auth/login.dto";
+
 const userRepository = new UserRepository();
 
 export class UserService {
-
   // REGISTER USER
   async createUser(data: CreateUserDTOType) {
     // Check email uniqueness
@@ -19,7 +19,7 @@ export class UserService {
     const usernameCheck = await userRepository.getUserByUsername(data.username);
     if (usernameCheck) throw new HttpError("Username already in use", 403);
 
-    // Hash password
+    // Hash password here (only once!)
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     // Default role
@@ -51,6 +51,7 @@ export class UserService {
     const user = await userRepository.getUserByEmail(data.email);
     if (!user) throw new HttpError("Invalid credentials", 401);
 
+    // Compare plain password with hashed password
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (!isPasswordValid) throw new HttpError("Invalid credentials", 401);
 
