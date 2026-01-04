@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
-dotenv.config();
+import mongoose from 'mongoose';
+import { MONGODB_URI } from '../database/mongodb';
 
-export const PORT: number = 
-    process.env.PORT ? parseInt(process.env.PORT) : 3000;
-export const MONGODB_URI: string = 
-    process.env.MONGODB_URI || 'mongodb://localhost:27017/defaultdb';
-// Application level constants, with fallbacks 
-// if .env variables are not set
-
-export const JWT_SECRET: string = 
-    process.env.JWT_SECRET || 'default'
+export async function connectToDatabase() {
+  try {
+    await mongoose.connect(MONGODB_URI);
+    console.log('Connected to MongoDB successfully.');
+  } catch (error) {
+    console.error('Error Connecting To MongoDB', error);
+    process.exit(1);
+  }
+}
