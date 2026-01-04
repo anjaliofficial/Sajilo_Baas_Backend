@@ -6,7 +6,7 @@ export interface IUserRepository{
     getUserByEmail(email: string): Promise<IUser | null>;
     getUserByUsername(username: string): Promise<IUser | null>;
     getUserById(id: string): Promise<IUser | null>;
-    getAllUser(): Promise<IUser[]>;
+    getAllUsers(): Promise<IUser[]>;
     updateUser(id: string, updateData: Partial<IUser>): Promise<IUser | null>;
     deleteUser(id: string): Promise<boolean>;
 
