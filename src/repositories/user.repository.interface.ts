@@ -8,4 +8,4 @@ export interface IUserRepository{
     updateUser(id: string, updateData: Partial<IUser>): Promise<IUser | null>;
     deleteUser(id: string): Promise<boolean>;
 
-}
+};
